@@ -17,11 +17,17 @@ public class UserDaoImpl
 
     RestTemplate restTemplate = new RestTemplate();
 
+    // TODO: Host handling
+    String host = "http://localhost:9200/";
+
+    // TODO: Auth login to be done this way? Safe?
+    String authUsername = "elastic";
+    String authPassword = "elasticpassword";
+
     public void create(ElasticsearchUser newInstance) {
 
         restTemplate.exchange(
-            // TODO: Host handling
-            "http://localhost:9200/" + "_security/user/" + newInstance.getUsername()
+            host + "_security/user/" + newInstance.getUsername()
             , HttpMethod.POST
             , new HttpEntity<String>(setPayload(newInstance), getHeaders())
             , JsonNode.class
@@ -34,7 +40,7 @@ public class UserDaoImpl
         ResponseEntity<JsonNode> requestResponse;
 
         requestResponse = restTemplate.exchange(
-            "http://localhost:9200/" + "_security/user"
+            host + "_security/user"
             , HttpMethod.GET
             , new HttpEntity<String>(null, getHeaders())
             , JsonNode.class
@@ -57,7 +63,7 @@ public class UserDaoImpl
         ResponseEntity<JsonNode> requestResponse;
 
         requestResponse = restTemplate.exchange(
-            "http://localhost:9200/" + "_security/user/" + id
+            host + "_security/user/" + id
             , HttpMethod.GET
             , new HttpEntity<String>(null, getHeaders())
             , JsonNode.class
@@ -75,7 +81,7 @@ public class UserDaoImpl
     public ElasticsearchUser update(ElasticsearchUser transientObject) {
 
         restTemplate.exchange(
-            "http://localhost:9200/" + "_security/user/" + transientObject.getUsername()
+            host + "_security/user/" + transientObject.getUsername()
             , HttpMethod.PUT
             , new HttpEntity<String>(setPayload(transientObject), getHeaders())
             , JsonNode.class
@@ -88,7 +94,7 @@ public class UserDaoImpl
     public void delete(ElasticsearchUser persistentObject) {
 
         restTemplate.exchange(
-            "http://localhost:9200/" + "_security/user/" + persistentObject.getUsername()
+            host + "_security/user/" + persistentObject.getUsername()
             , HttpMethod.DELETE
             , new HttpEntity<String>(setPayload(persistentObject), getHeaders())
             , JsonNode.class
@@ -100,7 +106,7 @@ public class UserDaoImpl
     public void enableUser(String id) {
 
         restTemplate.exchange(
-            "http://localhost:9200/" + "_security/user/" + id + "/_enable"
+            host + "_security/user/" + id + "/_enable"
             , HttpMethod.PUT
             , new HttpEntity<String>(null, getHeaders())
             , JsonNode.class
@@ -112,7 +118,7 @@ public class UserDaoImpl
     public void disableUser(String id) {
 
         restTemplate.exchange(
-            "http://localhost:9200/" + "_security/user/" + id + "/_disable"
+            host + "_security/user/" + id + "/_disable"
             , HttpMethod.PUT
             , new HttpEntity<String>(null, getHeaders())
             , JsonNode.class
@@ -125,8 +131,7 @@ public class UserDaoImpl
     public HttpHeaders getHeaders(){
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        // TODO: Auth login to be done this way? Safe?
-        headers.setBasicAuth("elastic", "elasticpassword");
+        headers.setBasicAuth(authUsername, authPassword);
         return headers;
     }
 
