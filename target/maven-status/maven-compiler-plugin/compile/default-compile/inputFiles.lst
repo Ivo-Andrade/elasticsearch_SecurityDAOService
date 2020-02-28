@@ -1,0 +1,5 @@
+/home/ivo/Documents/elasticsearch_UserDAO/src/main/java/br/com/looplex/dao/IDao.java
+/home/ivo/Documents/elasticsearch_UserDAO/src/main/java/br/com/looplex/ElasticsearchSecurityDAOService.java
+/home/ivo/Documents/elasticsearch_UserDAO/src/main/java/br/com/looplex/models/ElasticsearchUser.java
+/home/ivo/Documents/elasticsearch_UserDAO/src/main/java/br/com/looplex/dao/user/UserDao.java
+/home/ivo/Documents/elasticsearch_UserDAO/src/main/java/br/com/looplex/dao/user/UserDaoImpl.java
